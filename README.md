@@ -32,9 +32,48 @@ If using linux, make sure to change pg_hba.conf by adding
 Run to create db
 `rails db:create`
 
-
 ## Migrate DB
 `rails db:migrate`
 
+
+## Install Tailwind CSS
+`bundle add tailwindcss-rails`
+`rails tailwindcss:install`
+
+To Force Auto-update of Tailwind Changes
+Add `gem "rails_live_reload"` to Gemfile under `group :development do`
+Create initializer config/initializers/rails_live_reload.rb:
+```
+RailsLiveReload.configure do |config|
+  # config.url = "/rails/live/reload"
+
+  # Default watched folders & files
+  # config.watch %r{app/views/.+\.(erb|haml|slim)$}
+  # config.watch %r{(app|vendor)/(assets|javascript)/\w+/(.+\.(css|js|html|png|jpg|ts|jsx)).*}, reload: :always
+
+  # More examples:
+  # config.watch %r{app/helpers/.+\.rb}, reload: :always
+  # config.watch %r{config/locales/.+\.yml}, reload: :always
+
+  # config.enabled = Rails.env.development?
+end if defined?(RailsLiveReload)
+
+```
+Run
+`bundle binstubs --all`
+
+
+
 ## Start Rails App
+For Linux
 `rails server`
+or
+For Windows
+Change first Procfile.dev to
+```
+web: ruby bin/rails server -p 3000
+css: ruby bin/rails tailwindcss:watch
+
+```
+`bash bin/dev`
+
